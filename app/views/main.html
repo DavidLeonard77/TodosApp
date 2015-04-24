@@ -1,0 +1,31 @@
+
+
+<div class="todo-title"><h2>TODOS</h2></div>
+
+<div class="todos" ui-sortable="sortableOptions">
+  <div class="container-fluid todo-list" ng-repeat="todo in todos track by $index">
+    <div class="row todo-note">
+      <div class="col-xs-1" style="color: {{todo.color}}">{{$index}}</div>
+      <div class="col-xs-10">
+        <input type="text" class="form-control todo-value" ng-model="todo.item" style="color: {{todo.color}}" placeholder="I need todo...">
+      </div>
+      <div class="col-xs-1">
+        <div class="todo-btn" ng-click="removeTodo($index)" style="color: {{todo.color}}">x</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form ng-submit="addTodo()">
+  <div class="container-fluid todo-add">
+    <div class="row todo-input">
+      <div class="col-xs-1">></div>
+      <div class="col-xs-10">
+        <input type="text" class="form-control" ng-model="todo" size="20" placeholder="I need todo...">
+      </div>
+      <div class="col-xs-1">
+        <div class="todo-btn todo-btn-add" ng-click="addTodo()">+</div>
+      </div>
+    </div>
+  </div>
+</form>
