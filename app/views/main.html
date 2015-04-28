@@ -1,31 +1,80 @@
+<div id="todoApp">
 
+  <div class="todo-panel">
 
-<div class="todo-title"><h2>TODOS</h2></div>
-
-<div class="todos" ui-sortable="sortableOptions">
-  <div class="container-fluid todo-list" ng-repeat="todo in todos track by $index">
-    <div class="row todo-note">
-      <div class="col-xs-1" style="color: {{todo.color}}">{{$index}}</div>
-      <div class="col-xs-10">
-        <input type="text" class="form-control todo-value" ng-model="todo.item" style="color: {{todo.color}}" placeholder="I need todo...">
+    <div class="todo-title">
+      <div ng-repeat="list in todoLists">
+        <div class="clearfix">
+          <div ng-repeat="todo in list.todos"
+               class="todo-list-item"
+               style="background-color: {{todo.color}}"></div>
+        </div>
       </div>
-      <div class="col-xs-1">
-        <div class="todo-btn" ng-click="removeTodo($index)" style="color: {{todo.color}}">x</div>
-      </div>
+      <div><h2>TODOS</h2></div>
     </div>
+
+    <!-- Show each todo list -->
+    <div id="todoList-{{$index}}"
+         ng-repeat="list in todoLists"
+         class="todo-list-group">
+
+      <div ui-sortable="sortableOptions">
+
+      <!-- Todos in this list -->
+        <div ng-repeat="todo in list.todos track by $index"
+             ng-mouseover="todo.show=true"
+             ng-mouseleave="todo.show=false"
+             class="container-fluid todo-list">
+
+          <div class="row todo-note">
+            <div>{{$index+1}}</div>
+            <div>
+              <input ng-model="todo.item"
+                     type="text" 
+                     class="form-control todo-value"
+                     style="color: {{todo.color}}"
+                     placeholder="I need todo...">
+            </div>
+            <div ng-show="todo.show">
+              <div ng-repeat="color in list.colors"
+                   ng-click="todo.color=color"
+                   class="todo-list-item"
+                   style="background-color: {{color}}"></div>
+            </div>
+            <div ng-show="todo.show">
+              <div ng-click="removeTodo($parent.$index,$index)"
+                   class="todo-btn">-</div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Add a todo -->
+      <form ng-submit="addTodo($index,todoInput); todoInput='';">
+        <div class="container-fluid todo-add">
+          <div class="row todo-input">
+            <div>></div>
+            <div>
+              <input id="todo-submit-{{$index}}"
+                     type="text" class="form-control"
+                     ng-model="todoInput"
+                     size="20"
+                     placeholder="I need todo...">
+            </div>
+            <div>
+              <div class="todo-btn todo-btn-add"
+                   ng-click="addTodo($index,todoInput); todoInput='';">+</div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+    </div>
+
   </div>
+
+  <div class="todo-list-add" ng-click="addList()"><div>+</div></div>
+
 </div>
-
-<form ng-submit="addTodo()">
-  <div class="container-fluid todo-add">
-    <div class="row todo-input">
-      <div class="col-xs-1">></div>
-      <div class="col-xs-10">
-        <input type="text" class="form-control" ng-model="todo" size="20" placeholder="I need todo...">
-      </div>
-      <div class="col-xs-1">
-        <div class="todo-btn todo-btn-add" ng-click="addTodo()">+</div>
-      </div>
-    </div>
-  </div>
-</form>

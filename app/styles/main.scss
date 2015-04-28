@@ -3,6 +3,8 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
 
+@import "_mixins";
+
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
@@ -23,69 +25,157 @@ h2 {
   }
 }
 
+$panelShadow: 0 0 4px #222;
+
+#webtopCanvas {
+  width: 100%;
+  box-sizing: border-box;
+
+  & [class*="-panel"] {
+    box-shadow: $panelShadow;
+  }
+}
+
 #todoApp {
 
   $textShadow: 1px 1px #333;
   $todoPadding: 10px;
+  box-sizing: border-box;
 
   font-size: 24px;
   margin: 20px auto;
-  & > div:first-child {
-    padding: 20px 0 0;
-  }
+
+  width: 100%;
+  @include breakpoint(xs) { width: 100%; }
+  @include breakpoint(sm) { width: 66%; }
+  @include breakpoint(lg) { width: 50%; }
+  @include breakpoint(xl) { width: 33%; }
   
-  .todo-title {
-    padding: 0 0 40px;
-    color: #555;
-  }
-  .todo-list {
-    background-color: #444;
-    :hover {
-      background-color: #555;
+  .todo-panel {
+
+    background-color: #212121;
+
+    .todo-title {
+      color: #555;
+      cursor: pointer;
+      & > div:last-child {
+        padding: 20px 0;
+      };
     }
-  }
-  .todo-add {
-    background-color: #222;
-    color: #FFF;
-  }
-  .todo-note {
-    padding: $todoPadding;
-    input[type="text"] {
-      text-shadow: $textShadow;
+    .todo-list {
+      background-color: #444;
+      &:hover {
+        background-color: #555;
+        & > div:nth-child(1) {
+          opacity: 1;
+        }
+      }
+      .todo-note {
+        padding: $todoPadding;
+        input[type="text"] {
+          text-shadow: $textShadow;
+        }
+        & > div {
+          height: 40px;
+          display: table-cell;
+          vertical-align: middle;
+        }
+        & > div:nth-child(2) {
+          width: 100%;
+        }
+        & > div:nth-child(3) {
+          min-width: 50px;
+          padding-right: 10px;
+        }
+        & > div:first-child,
+        & > div:last-child {
+          opacity: 0.2;
+          color: #CCC;
+          min-width: 27px;
+          text: {
+            align: center;
+            shadow: $textShadow;
+          }
+          cursor: pointer;
+        }
+      }
     }
-    & > div:first-child,
-    & > div:last-child {
-      text-shadow: $textShadow;
+    .todo-add {
+      background-color: #222;
+      color: #FFF;
+      input::-webkit-input-placeholder { 
+        color: #333;
+      }
+      .todo-input {
+        & > div {
+          display: table-cell;
+          vertical-align: middle;
+        }
+        & > div:nth-child(2) {
+          width: 100%;
+        }
+        & > div:first-child,
+        & > div:last-child {
+          text-align: center;
+          min-width: 27px;
+        }
+        color: #CCC;
+        padding: $todoPadding;
+        input::-moz-placeholder,
+        input:-moz-placeholder,
+        input:-ms-input-placeholder { 
+          color: #333;
+        }
+      }
+    }
+
+    .todo-list-item {
+      width: 12px;
+      height: 12px;
+      float: left;
+    }
+    .todo-list-item ,
+    [class*="todo-btn"] {
       cursor: pointer;
     }
-  }
-  .todo-input {
-    color: #CCC;
-    padding: $todoPadding;
+
+    /*Clear out so Bootstrap styling*/
+    @mixin todoSanitation {
+      margin: 0;
+      border: {
+        radius: 0;
+        width: 0;
+      };
+      box-shadow: none;
+      background-color: transparent;
+      color: #FFF;
+    }
+
+    input[type="submit"],
+    input[type="text"],
+    .btn {
+      @include todoSanitation;
+    }
   }
 
-  [class*="todo-btn"] {
-    text-align: right;
+  .todo-list-add {
     cursor: pointer;
-  }
+    display: table;
+    margin: 0 auto;
+    background-color: #181818;
 
-  /*Clear out so Bootstrap styling*/
-  @mixin todoSanitation {
-    padding: 10px;
-    margin: 0;
-    border: {
-      radius: 0;
-      width: 0;
+    &:hover {
+      padding-top: 10px;
+      color: #CCC;
     };
-    box-shadow: none;
-    background-color: transparent;
-    color: #FFF;
-  }
 
-  input[type="submit"],
-  input[type="text"],
-  .btn {
-    @include todoSanitation;
+    & > div {
+      height: 50px;
+      width: 50px;
+      display: table-cell;
+      vertical-align: middle;
+      text-align: center;
+    }
   }
 }
 
