@@ -87,7 +87,7 @@ angular.module('todosApp')
       // Pass the colors array for random note color from pallete
       var l = $scope.todoLists.length;
       $scope.todoLists.push( initList() );
-      if (l>0) $scope.addTodo(l,'a new thing');
+      if (l>0) { $scope.addTodo(l,'a new thing'); }
     }
 
     $scope.addTodo = function (list,item) {
@@ -99,14 +99,10 @@ angular.module('todosApp')
 
     $scope.removeTodo = function (list,item) {
 
-      // Take out note and empty lists
+      // Take out note and empty list if empty
       $scope.todoLists[list].todos.splice(item,1);
-      for (var c=0, l=$scope.todoLists.length; c<l; c++) {
+      if (!$scope.todoLists[list].todos.length) { $scope.todoLists.splice(list,1); }
 
-        // Remove if list is empty
-        if (!$scope.todoLists[c].todos.length) $scope.todoLists.splice(c,1);
-
-      }
     };
 
     // Draggable Items
