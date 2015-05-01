@@ -1,4 +1,4 @@
-<div id="todoApp">
+<div id="todoLists">
 
   <div class="todo-panel">
 
@@ -20,7 +20,7 @@
 
       <div ui-sortable="sortableOptions">
 
-      <!-- Todos in this list -->
+        <!-- Todos in this list -->
         <div ng-repeat="todo in list.todos track by $index"
              ng-mouseover="todo.show=true"
              ng-mouseleave="todo.show=false"

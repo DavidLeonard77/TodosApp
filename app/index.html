@@ -20,8 +20,10 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div id="webtopCanvas" class="container-fluid">
-      <div ng-view=""></div>
+    <div id="todosCanvas" class="container-fluid">
+
+        <div ng-view=""></div>
+
     </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -54,7 +56,11 @@
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/main.js"></script>
+
+    <script src="scripts/controllers/canvas.js"></script>
+    <script src="scripts/controllers/lists.js"></script>
+    <script src="scripts/controllers/sheets.js"></script>
+
     <!-- endbuild -->
 </body>
 </html>
