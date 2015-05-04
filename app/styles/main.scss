@@ -12,6 +12,10 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
   padding: 0.2em 0;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   padding: 0;
   background: {
@@ -25,12 +29,9 @@ h2 {
   }
 }
 
-$panelShadow: 0 0 4px #222;
-
 #todosCanvas {
   width: 100%;
-  box-sizing: border-box;
-
+  @include breakpoint(xs) { padding: 0; }
   & [class*="-panel"] {
     box-shadow: $panelShadow;
   }
@@ -39,22 +40,12 @@ $panelShadow: 0 0 4px #222;
 #todoLists {
 
   $textShadow: 1px 1px #333;
-  $todoPadding: 10px;
-  box-sizing: border-box;
+  @include panel;
+  @include breakpoint(xs) { position: relative; }
+  @include breakpoint(md) { position: absolute; }
 
-  font-size: 24px;
-  margin: 20px auto;
-
-  width: 100%;
-  @include breakpoint(xs) { width: 100%; }
-  @include breakpoint(sm) { width: 66%; }
-  @include breakpoint(lg) { width: 50%; }
-  @include breakpoint(xl) { width: 33%; }
-  
   .todo-panel {
-
     background-color: #212121;
-
     .todo-title {
       color: #555;
       cursor: pointer;
@@ -63,18 +54,18 @@ $panelShadow: 0 0 4px #222;
       };
     }
     .todo-list {
-      background-color: #444;
-      &:hover {
-        background-color: #555;
-        & > div:nth-child(1) {
-          opacity: 1;
-        }
-      }
       .todo-note {
+        @include animation-panel(background-color);
+        background-color: #444;
+        &:hover {
+          background-color: #555;
+        }
         padding: $todoPadding;
+
         input[type="text"] {
           text-shadow: $textShadow;
         }
+
         & > div {
           height: 40px;
           display: table-cell;
@@ -89,6 +80,7 @@ $panelShadow: 0 0 4px #222;
         }
         & > div:first-child,
         & > div:last-child {
+          @include animation-panel(opacity);
           opacity: 0.2;
           color: #CCC;
           min-width: 27px;
@@ -96,6 +88,9 @@ $panelShadow: 0 0 4px #222;
             align: center;
             shadow: $textShadow;
           }
+          &:hover {
+            opacity: 1;
+          };
           cursor: pointer;
         }
       }
@@ -129,46 +124,22 @@ $panelShadow: 0 0 4px #222;
       }
     }
 
-    .todo-list-item {
-      width: 12px;
-      height: 12px;
-      float: left;
-    }
-    .todo-list-item ,
-    [class*="todo-btn"] {
-      cursor: pointer;
-    }
-
-    /*Clear out so Bootstrap styling*/
-    @mixin todoSanitation {
-      margin: 0;
-      border: {
-        radius: 0;
-        width: 0;
-      };
-      box-shadow: none;
-      background-color: transparent;
-      color: #FFF;
-    }
-
     input[type="submit"],
     input[type="text"],
     .btn {
       @include todoSanitation;
     }
   }
-
   .todo-list-add {
+    @include animation-panel(padding, color);
     cursor: pointer;
     display: table;
     margin: 0 auto;
     background-color: #181818;
-
     &:hover {
       padding-top: 10px;
       color: #CCC;
     };
-
     & > div {
       height: 50px;
       width: 50px;
@@ -179,3 +150,85 @@ $panelShadow: 0 0 4px #222;
   }
 }
 
+#todoSheets {
+
+  $textShadow: 1px 1px #999;
+  @include panel;
+
+  .todo-panel {
+
+    background-color: #C9C9C9;
+
+    .todo-title {
+      color: #999;
+      cursor: pointer;
+      & > div:last-child {
+        padding: 20px 0;
+      };
+    }
+    .todo-list {
+      padding: 0 15px 15px;
+      .todo-sheet {
+        background-color: #F1F1F1;
+
+        @include animation-panel(background-color);
+        &:hover {
+          background-color: #FFF;
+        }
+        padding: $todoPadding;
+
+        & > div {
+          height: 200px;
+          display: table-cell;
+          vertical-align: middle;
+        }
+        & > div:nth-child(1) {
+          width: 100%;
+          padding: 15px 25px 15px 0;
+          textarea {
+            height: 200px;
+            @include todoSanitation;
+            resize: none;
+            text-shadow: $textShadow;
+          }
+        }
+        & > div:nth-child(2) {
+          min-width: 50px;
+          padding-right: 10px;
+        }
+        & > div:nth-child(3) {
+          @include animation-panel(opacity);
+          opacity: 0.2;
+          color: #666;
+          min-width: 27px;
+          text: {
+            align: center;
+            shadow: $textShadow;
+          }
+          &:hover {
+            opacity: 1;
+          };
+          cursor: pointer;
+        }
+      }
+    }
+  }  
+  .todo-sheet-add {
+    @include animation-panel(padding, color);
+    cursor: pointer;
+    display: table;
+    margin: 0 auto;
+    background-color: #181818;
+    &:hover {
+      padding-top: 10px;
+      color: #777;
+    };
+    & > div {
+      height: 50px;
+      width: 50px;
+      display: table-cell;
+      vertical-align: middle;
+      text-align: center;
+    }
+  }
+}

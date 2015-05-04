@@ -1,3 +1,6 @@
+$panelShadow: 0 0 4px #222;
+$todoPadding: 10px;
+
 $xs: 320px;
 $sm: 768px;
 $md: 768px;
@@ -20,4 +23,61 @@ $xl: 1200px;
   @else if $point == xl {
     @media (min-width : $xl)  { @content; }
   }
+}
+
+@mixin animation-panel ($properties...) {
+             -webkit-transition-duration: 0.5s;
+             -webkit-transition-property: $properties;
+      -webkit-transition-timing-function: ease-out;
+                -moz-transition-duration: 0.5s;
+                -moz-transition-property: $properties;
+         -moz-transition-timing-function: ease-out;
+                  -o-transition-duration: 0.5s;
+                  -o-transition-property: $properties;
+           -o-transition-timing-function: ease-out;
+                     transition-duration: 0.5s;
+                     transition-property: $properties;
+              transition-timing-function: ease-out;
+}
+
+/*Clear out so Bootstrap styling*/
+@mixin todoSanitation {
+  margin: 0;
+  border: {
+    radius: 0 !important;
+    width: 0;
+  };
+  box-shadow: none;
+  background-color: transparent;
+}
+
+@mixin colorBox {
+  .todo-list-item {
+    width: 12px;
+    height: 12px;
+    float: left;
+  }
+  .todo-list-item ,
+  [class*="todo-btn"] {
+
+    cursor: pointer;
+  }
+}
+
+@mixin panel {
+
+  &:hover {
+    z-index: 5000;
+  };
+  
+  font-size: 24px;
+  margin: 0 auto;
+
+  width: 100%;
+  @include breakpoint(xs) { width: 100%; }
+  @include breakpoint(sm) { width: 66%; }
+  @include breakpoint(lg) { width: 50%; }
+  @include breakpoint(xl) { width: 33%; }
+
+  @include colorBox;
 }

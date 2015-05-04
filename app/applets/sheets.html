@@ -1,3 +1,58 @@
 <div id="todoSheets">
 
+  <div class="todo-panel">
+
+    <div class="todo-title">
+        <div class="clearfix">
+          <div ng-repeat="sheet in todoSheets"
+               class="todo-list-item"
+               style="background-color: {{sheet.color}}"></div>
+        </div>
+      <div><h2>NOTES</h2></div>
+    </div>
+
+    <div ui-sortable="sortableOptions">
+
+      <!-- Show each sheet -->
+      <div class="todo-list"
+           ng-repeat="sheet in todoSheets track by $index"
+           ng-mouseover="sheet.show=true"
+           ng-mouseleave="sheet.show=false">
+      
+        <div class="todo-sheet">
+
+          <!-- Note -->
+          <div>
+            <textarea type="text"
+                      cols="20"
+                      id="todoSheet-{{$index}}"
+                      class="form-control sheet-value"
+                      style="color: {{sheet.color}}"
+                      ng-model="sheet.text"
+                      data-palette="{{sheet.colors}}"
+                      placeholder="some notes">{{text}}</textarea>
+          </div>
+
+          <!-- Color picker -->
+          <div ng-show="sheet.show">
+            <div ng-repeat="color in sheet.colors track by $index"
+                 ng-click="sheet.color=color"
+                 class="todo-list-item"
+                 style="background-color: {{color}}"></div>
+          </div>
+
+          <!-- Delete Note -->
+          <div ng-click="removeSheet($index)"
+               class="todo-btn">-</div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="todo-sheet-add" ng-click="addSheet()"><div>+</div></div>
+
 </div>

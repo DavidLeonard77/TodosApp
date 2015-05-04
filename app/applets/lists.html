@@ -15,6 +15,7 @@
 
     <!-- Show each todo list -->
     <div id="todoList-{{$index}}"
+         data-palette="{{list.colors}}"
          ng-repeat="list in todoLists"
          class="todo-list-group">
 
@@ -26,8 +27,12 @@
              ng-mouseleave="todo.show=false"
              class="container-fluid todo-list">
 
-          <div class="row todo-note">
+          <div class="todo-note">
+
+            <!-- Count -->
             <div>{{$index+1}}</div>
+
+            <!-- Todo -->
             <div>
               <input ng-model="todo.item"
                      type="text" 
@@ -35,16 +40,21 @@
                      style="color: {{todo.color}}"
                      placeholder="I need todo...">
             </div>
+
+            <!-- Color Picker -->
             <div ng-show="todo.show">
               <div ng-repeat="color in list.colors"
                    ng-click="todo.color=color"
                    class="todo-list-item"
                    style="background-color: {{color}}"></div>
             </div>
+
+            <!-- Delete Todo -->
             <div ng-show="todo.show">
               <div ng-click="removeTodo($parent.$index,$index)"
                    class="todo-btn">-</div>
             </div>
+
           </div>
 
         </div>
@@ -58,7 +68,8 @@
             <div>></div>
             <div>
               <input id="todo-submit-{{$index}}"
-                     type="text" class="form-control"
+                     type="text"
+                     class="form-control"
                      ng-model="todoInput"
                      size="20"
                      placeholder="I need todo...">
